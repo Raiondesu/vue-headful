@@ -19,15 +19,15 @@ This is a direct and fully reworked fork of [`vue-headful`](https://github.com/t
 ## Table Of Contents
 
  - [Usage](#usage)
-    - [Register the plugin](#register-the-plugin)
-    - [Plugin options](#plugin-options)
-    - [Headful shorthand](#headful-shorthand)
-    - [Plugin usage](#plugin-usage)
-        - [As function](#as-function)
-        - [As arrow-function](#as-arrow-function)
-        - [As data](#as-component-data)
-        - [As an object](#as-an-object)
-    - [Component usage](#component-usage)
+  - [Register the plugin](#register-the-plugin)
+  - [Plugin options](#plugin-options)
+  - [Headful shorthand](#headful-shorthand)
+  - [Plugin usage](#plugin-usage)
+    - [As function](#as-function)
+    - [As arrow-function](#as-arrow-function)
+    - [As data](#as-component-data)
+    - [As an object](#as-an-object)
+  - [Component usage](#component-usage)
   - [Description](#description)
   - [More](#more)
 
@@ -44,7 +44,7 @@ import vueHeadful from 'vue-headful';
 Vue.use(vueHeadful);
 
 new Vue({
-    // your configuration
+  // your configuration
 });
 ```
 
@@ -60,7 +60,7 @@ Optinally you can define custom opions for a plugin:
 
 ```js
 Vue.use(vueHeadful, {
-    key: 'myMetaTags' // custom key for component option
+  key: 'myMetaTags' // custom key for component option
 })
 ```
 
@@ -68,9 +68,9 @@ and then in some `component.vue`:
 
 ```js
 export default {
-    myMetaTags: {
-        title: 'Yay, a title in my custom option!'
-    }
+  myMetaTags: {
+    title: 'Yay, a title in my custom option!'
+  }
 }
 ```
 
@@ -90,13 +90,13 @@ then in any template:
 <template>
   <!-- or <vue-my-meta-tags> if using custom key "myMetaTags" -->
   <vue-headful
-      title=""
-      description=""
-      keywords=""
-      image=""
-      lang=""
-      ogLocale=""
-      url=""
+    title=""
+    description=""
+    keywords=""
+    image=""
+    lang=""
+    ogLocale=""
+    url=""
   />
 </template>
 ```
@@ -109,12 +109,12 @@ The plugin also adds a shorthand for headful in every vue instance as `$headful`
 
 ```js
 methods: {
-    someMethod() {
-        this.$headful({ /* your headful tags here */ });
+  someMethod() {
+    this.$headful({ /* your headful tags here */ });
 
-        // or, with the custom key:
-        // this.$myMetaTags({ /* your headful tags here */ });
-    }
+    // or, with the custom key:
+    // this.$myMetaTags({ /* your headful tags here */ });
+  }
 }
 ```
 
@@ -124,13 +124,17 @@ methods: {
 
 ```js
 export default {
-    // Supports Vue component's `this` context through an argument
-    headful(vm) {
-        return {
-            title: 'some title',
-            description: 'yay, a static description'
-        }
+  // Supports Vue component's `this` context
+  headful() {
+    const vm = this;
+    return {
+      // Dynamic binding through getters
+      get title() {
+        return vm.myPageTitle || 'some title'
+      },
+      description: 'yay, a static description'
     }
+  }
 }
 ```
 
@@ -138,16 +142,19 @@ export default {
 
 ```js
 export default {
-    headful: vm => ({
-        // Supports Vue component's `this` context through an argument
-        title: 'some title of ' + vm.someString,
-        description: 'yay, a static description'
-    }),
-    data() {
-        return {
-            someString: 'string'
-        }
+  // Supports Vue component's `this` context through an argument
+  headful: vm => ({
+    // Getter for dynamic value update
+    get title() {
+      return 'some title of ' + vm.someString
+    },
+    description: 'yay, a static description'
+  }),
+  data() {
+    return {
+      someString: 'string'
     }
+  }
 }
 ```
 
@@ -155,15 +162,15 @@ export default {
 
 ```js
 export default {
-    data() {
-        return {
-            someString: 'string',
-            headful: {
-                title: 'title',
-                description: 'yay, a static description'
-            }
-        }
+  data() {
+    return {
+      someString: 'string',
+      headful: {
+        title: 'title',
+        description: 'yay, a static description'
+      }
     }
+  }
 }
 ```
 
@@ -171,10 +178,10 @@ export default {
 
 ```js
 export default {
-    headful: {
-        title: 'some title',
-        description: 'yay, a static description'
-    }
+  headful: {
+    title: 'some title',
+    description: 'yay, a static description'
+  }
 }
 ```
 
@@ -187,13 +194,13 @@ You can find a non-complete list of head properties in the following example:
 
 ```html
 <vue-headful
-    title=""
-    description=""
-    keywords=""
-    image=""
-    lang=""
-    ogLocale=""
-    url=""
+  title=""
+  description=""
+  keywords=""
+  image=""
+  lang=""
+  ogLocale=""
+  url=""
 />
 ```
 
@@ -202,18 +209,18 @@ The selectors can be any valid CSS selector.
 
 ```html
 <vue-headful
-    :html="{
-        body: {id: 'aPageId'},
-        h1: {'data-foo': 'bar'},
-    }"
-    :head="{
-        'meta[charset]': {charset: 'utf-8'},
-    }"
+  :html="{
+    body: {id: 'aPageId'},
+    h1: {'data-foo': 'bar'},
+  }"
+  :head="{
+    'meta[charset]': {charset: 'utf-8'},
+  }"
 />
 
 <!-- Results in:
 <head>
-    <meta charset="utf-8">
+  <meta charset="utf-8">
 </head>
 <body id="aPageId">
 <h1 data-foo="bar"></h1>
@@ -253,13 +260,13 @@ headful: {
 
 ```html
 <vue-headful
-    title=""
-    description=""
-    keywords=""
-    image=""
-    lang=""
-    ogLocale=""
-    url=""
+  title=""
+  description=""
+  keywords=""
+  image=""
+  lang=""
+  ogLocale=""
+  url=""
 />
 ```
 
@@ -272,11 +279,11 @@ The selectors can be any valid CSS selector.
 
 headful: {
   html: {
-      body: { id: 'aPageId' },
-      h1: { 'data-foo': 'bar' },
+    body: { id: 'aPageId' },
+    h1: { 'data-foo': 'bar' },
   },
   head: {
-      'meta[charset]': { charset: 'utf-8' },
+    'meta[charset]': { charset: 'utf-8' },
   }
 }
 ```
@@ -286,20 +293,20 @@ headful: {
 
 ```html
 <vue-headful
-    :html="{
-        body: {id: 'aPageId'},
-        h1: {'data-foo': 'bar'},
-    }"
-    :head="{
-        'meta[charset]': {charset: 'utf-8'},
-    }"
+  :html="{
+    body: {id: 'aPageId'},
+    h1: {'data-foo': 'bar'},
+  }"
+  :head="{
+    'meta[charset]': {charset: 'utf-8'},
+  }"
 />
 ```
 
 ```html
 <!-- Results in: -->
 <head>
-    <meta charset="utf-8">
+  <meta charset="utf-8">
 </head>
 <body id="aPageId">
 <h1 data-foo="bar"></h1>
@@ -340,14 +347,14 @@ For example, to specify the title and description you have to prepare the HTML a
 <!DOCTYPE html>
 <html>
 <head>
-    <title></title>
-    <meta itemprop="name">
-    <meta property="og:title">
-    <meta name="twitter:title">
-    <meta name="description"/>
-    <meta itemprop="description">
-    <meta property="og:description">
-    <meta name="twitter:description">
+  <title></title>
+  <meta itemprop="name">
+  <meta property="og:title">
+  <meta name="twitter:title">
+  <meta name="description"/>
+  <meta itemprop="description">
+  <meta property="og:description">
+  <meta name="twitter:description">
 </head>
 <body>
 <!-- ... -->
@@ -360,19 +367,19 @@ That means you can also set head properties asynchronously, for example after an
 
 ```html
 <script>
-    export default {
-        headful() {
-            return {
-                title: 'Dynamic title',
-            };
-        },
-        mounted() {
-            // dummy async operation to show watcher on properties
-            setTimeout(() => {
-                this.headful.title = 'Dynamic async title';
-            }, 3000);
-        },
-    };
+  export default {
+    headful() {
+      return {
+        title: 'Dynamic title',
+      };
+    },
+    mounted() {
+      // dummy async operation to show watcher on properties
+      setTimeout(() => {
+        this.headful.title = 'Dynamic async title';
+      }, 3000);
+    },
+  };
 </script>
 ```
 

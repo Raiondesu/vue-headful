@@ -14,14 +14,10 @@ const plugin: PluginObject<{ key?: string, component?: boolean }> = {
       const name = `Vue${key[0].toUpperCase() + key.substr(1)}`;
       Vue.component(name, {
         name,
-        props: [...Object.keys(headful.props), key],
-        created() {
-          if (this[key]) {
-            this.$watch(key, headful, { deep: true, immediate: true });
-          } else {
-            Object.keys(this.$props).forEach(p => (p !== key) && this.$watch(p, headful.props[p], { immediate: true }));
-          }
-        },
+        props: Object.keys(headful.props),
+        watch: {
+          '$props': headful
+        }
       });
     }
 
@@ -32,7 +28,7 @@ const plugin: PluginObject<{ key?: string, component?: boolean }> = {
         const vm = this;
         const _headful = this.$options[key];
         return {
-          get [key]() { return typeof _headful === 'function' ? _headful.bind(vm, vm)() : _headful; }
+          [key]: typeof _headful === 'function' ? _headful.bind(vm, vm)() : _headful
         };
       },
       created(this: Vue) {
@@ -49,22 +45,3 @@ if (window && window['Vue']) {
 }
 
 export default plugin;
-
-export interface Headful {
-  [key: string]: any
-}
-
-declare module "vue/types/options" {
-  interface ComponentOptions<V extends Vue> {
-    headful?: Headful | {
-      (vm?: V): Headful
-    }
-  }
-}
-
-declare module "vue/types/vue" {
-  interface Vue {
-    $headful<T extends object>(props: T): void
-    headful?: Headful
-  }
-}

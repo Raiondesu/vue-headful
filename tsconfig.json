@@ -18,5 +18,8 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "sourceMap": true
-  }
+  },
+  "files": [
+    "./types/vue.d.ts"
+  ]
 }

@@ -1,5 +1,4 @@
 import headful from 'headful';
-import './types/vue';
 const plugin = {
     install(Vue, options) {
         const key = (options && options.key) || 'headful';
@@ -10,15 +9,10 @@ const plugin = {
             const name = `Vue${key[0].toUpperCase() + key.substr(1)}`;
             Vue.component(name, {
                 name,
-                props: [...Object.keys(headful.props), key],
-                created() {
-                    if (this[key]) {
-                        this.$watch(key, headful, { deep: true, immediate: true });
-                    }
-                    else {
-                        Object.keys(this.$props).forEach(p => (p !== key) && this.$watch(p, headful.props[p], { immediate: true }));
-                    }
-                },
+                props: Object.keys(headful.props),
+                watch: {
+                    '$props': headful
+                }
             });
         }
         Vue.mixin({
@@ -28,7 +22,7 @@ const plugin = {
                 const vm = this;
                 const _headful = this.$options[key];
                 return {
-                    get [key]() { return typeof _headful === 'function' ? _headful.bind(vm, vm)() : _headful; }
+                    [key]: typeof _headful === 'function' ? _headful.bind(vm, vm)() : _headful
                 };
             },
             created() {
