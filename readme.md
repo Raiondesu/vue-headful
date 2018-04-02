@@ -405,3 +405,8 @@ Also see the non-complete list of meta tags and other head properties you can de
 For more information on everything you can put into `<head>`, have a look at <https://gethead.info/>.
 
 Demo: https://verywow.github.io/vue-simple-headful/
+
+## Compatibility
+
+vue-headful works with every current and most reasonably old web browsers.
+If you need to support older browsers including Internet Explorer, have a look at [Headful: Compatibility](https://github.com/troxler/headful#compatibility).
